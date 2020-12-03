@@ -13,6 +13,12 @@ The player must control the square in order to hit the ball moving towards it to
 
 If the ball enters the opponent's square, the player gets 1 point.
 
+We worked together on a video call in a zoom.
+
+Adil wrote the code and I checked it. 
+
+Discussing together we made the project in one day.
+
 We used the library "pygame" to create.
 
 Project was made by Adil Ismailov and Avgustin Chynarbekov. 
