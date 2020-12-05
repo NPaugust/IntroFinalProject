@@ -21,6 +21,7 @@ player_ai = pygame.Rect(10, display_height // 2 - 70, 10, 140)
 # Colors
 black = (0, 0, 0)
 white = (255, 255, 255)
+white_grey = (150, 150, 150)
 
 # Game settings
 ball_speed_x = 7 * random.choice((1, -1))
@@ -33,6 +34,7 @@ player_score = 0
 player_ai_score = 0
 
 game_font = pygame.font.Font(None, 100)
+small_game_font = pygame.font.Font(None, 60)
 
 
 def ball_animation():
@@ -154,4 +156,60 @@ def run_game():
         clock.tick(FPS)
 
 
-run_game()
+def main_menu():
+    click = False
+    while True:
+        display.fill(black)
+
+        mx, my = pygame.mouse.get_pos()
+
+        # Buttons settings
+        start_button = pygame.Rect(440, 290, 400, 50)
+        quit_button = pygame.Rect(440, 430, 400, 50)
+
+        # Mouse position and button animation
+        if 440 + 400 > mx > 440 and 290 + 50 > my > 290:
+            pygame.draw.rect(display, white, start_button)
+        else:
+            pygame.draw.rect(display, white_grey, start_button)
+
+        if 440 + 400 > mx > 440 and 430 + 50 > my > 430:
+            pygame.draw.rect(display, white, quit_button)
+        else:
+            pygame.draw.rect(display, white_grey, quit_button)
+
+        # For click
+        if start_button.collidepoint((mx, my)):
+            if click:
+                run_game()
+        if quit_button.collidepoint((mx, my)):
+            if click:
+                quit()
+
+        # Events
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1 and start_button.collidepoint((mx, my)):
+                    click = True
+                if event.button == 1 and quit_button.collidepoint((mx, my)):
+                    click = True
+
+        # Menu Text
+        main_text = game_font.render(f"{'Pong'}", False, white)
+        display.blit(main_text, (560, display_height // 6))
+
+        start_text = small_game_font.render(f"{'Start'}", False, black)
+        display.blit(start_text, (600, 295))
+
+        quit_text = small_game_font.render(f"{'Quit'}", False, black)
+        display.blit(quit_text, (600, 435))
+
+        # Window update
+        pygame.display.update()
+        clock.tick(FPS)
+
+
+main_menu()
